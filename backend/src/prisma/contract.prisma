@@ -1,0 +1,50 @@
+
+ // use prisma-8
+
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  username     String?       @unique
+  passwordHash String
+  spots        SkateSpot[]
+  media        SpotMedia[]
+  comments     SpotComment[]
+  createdAt    TimestamptzString @default(now())
+  updatedAt    temporal.updatedAtString()
+}
+
+model SkateSpot {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String?
+  address     String?
+  latitude    Float
+  longitude   Float
+  createdById Int
+  createdBy   User          @relation(fields: [createdById], references: [id])
+  media       SpotMedia[]
+  comments    SpotComment[]
+  createdAt   TimestamptzString @default(now())
+  updatedAt   temporal.updatedAtString()
+}
+
+model SpotMedia {
+  id        Int           @id @default(autoincrement())
+  url       String
+  type      String
+  userId    Int
+  spotId    Int
+  user      User          @relation(fields: [userId], references: [id])
+  spot      SkateSpot     @relation(fields: [spotId], references: [id])
+  createdAt TimestamptzString @default(now())
+}
+
+model SpotComment {
+  id        Int           @id @default(autoincrement())
+  content   String
+  userId    Int
+  spotId    Int
+  user      User          @relation(fields: [userId], references: [id])
+  spot      SkateSpot     @relation(fields: [spotId], references: [id])
+  createdAt TimestamptzString @default(now())
+}
