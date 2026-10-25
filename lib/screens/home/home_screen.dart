@@ -1,10 +1,15 @@
-
 import 'package:flutter/material.dart';
 
 import '../../services/spot_service.dart';
+import '../spots/create_spot_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final Future<void> Function() onLogout;
+
+  const HomeScreen({
+    super.key,
+    required this.onLogout,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -12,6 +17,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Spot>> _spotsFuture;
+
+  bool _isLoggingOut = false;
+  bool _isOpeningCreateScreen = false;
 
   @override
   void initState() {
@@ -27,18 +35,89 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(_loadSpots);
   }
 
+  Future<void> _openCreateSpot() async {
+    if (_isOpeningCreateScreen) return;
+
+    setState(() => _isOpeningCreateScreen = true);
+
+    try {
+      final created = await Navigator.of(context).push<bool>(
+        MaterialPageRoute<bool>(
+          builder: (_) => CreateSpotScreen(
+            onSessionExpired: widget.onLogout,
+          ),
+        ),
+      );
+
+      if (!mounted) return;
+
+      if (created == true) {
+        setState(_loadSpots);
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isOpeningCreateScreen = false);
+      }
+    }
+  }
+
+  Future<void> _logout() async {
+    if (_isLoggingOut) return;
+
+    setState(() => _isLoggingOut = true);
+
+    try {
+      await widget.onLogout();
+    } finally {
+      if (mounted) {
+        setState(() => _isLoggingOut = false);
+      }
+    }
+  }
+
+  Future<void> _refreshSpots() async {
+    setState(_loadSpots);
+
+    try {
+      await _spotsFuture;
+    } catch (_) {
+      // Le FutureBuilder affiche l'erreur et permet de réessayer.
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('SkateSpot'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            tooltip: 'Créer un spot',
+            onPressed: _isOpeningCreateScreen
+                ? null
+                : _openCreateSpot,
+            icon: const Icon(Icons.add_location_alt),
+          ),
+          IconButton(
+            tooltip: 'Se déconnecter',
+            onPressed: _isLoggingOut ? null : _logout,
+            icon: _isLoggingOut
+                ? const SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
+            )
+                : const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: FutureBuilder<List<Spot>>(
         future: _spotsFuture,
         builder: (context, snapshot) {
-          if (snapshot.connectionState ==
-              ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -51,10 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
-                      Icons.wifi_off,
-                      size: 48,
-                    ),
+                    const Icon(Icons.wifi_off, size: 48),
                     const SizedBox(height: 16),
                     const Text(
                       'Impossible de charger les spots.',
@@ -79,18 +155,24 @@ class _HomeScreenState extends State<HomeScreen> {
           final spots = snapshot.data ?? [];
 
           if (spots.isEmpty) {
-            return const Center(
-              child: Text(
-                'Aucun spot disponible pour le moment.',
+            return RefreshIndicator(
+              onRefresh: _refreshSpots,
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: const [
+                  SizedBox(height: 200),
+                  Center(
+                    child: Text(
+                      'Aucun spot disponible pour le moment.',
+                    ),
+                  ),
+                ],
               ),
             );
           }
 
           return RefreshIndicator(
-            onRefresh: () async {
-              _retry();
-              await _spotsFuture;
-            },
+            onRefresh: _refreshSpots,
             child: ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: spots.length,
@@ -98,14 +180,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 final spot = spots[index];
 
                 return Card(
-                  margin: const EdgeInsets.only(
-                    bottom: 12,
-                  ),
+                  margin: const EdgeInsets.only(bottom: 12),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           spot.name,
@@ -118,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 8),
                           Row(
                             crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                            CrossAxisAlignment.start,
                             children: [
                               const Icon(
                                 Icons.location_on_outlined,

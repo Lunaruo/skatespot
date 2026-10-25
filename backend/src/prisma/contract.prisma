@@ -11,6 +11,7 @@ model User {
   comments     SpotComment[]
   createdAt    TimestamptzString @default(now())
   updatedAt    temporal.updatedAtString()
+  refreshTokens RefreshToken[]
 }
 
 model SkateSpot {
@@ -46,5 +47,14 @@ model SpotComment {
   spotId    Int
   user      User          @relation(fields: [userId], references: [id])
   spot      SkateSpot     @relation(fields: [spotId], references: [id])
+  createdAt TimestamptzString @default(now())
+}
+
+model RefreshToken {
+  id        Int              @id @default(autoincrement())
+  tokenHash String           @unique
+  userId    Int
+  user      User             @relation(fields: [userId], references: [id])
+  expiresAt TimestamptzString
   createdAt TimestamptzString @default(now())
 }
