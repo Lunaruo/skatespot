@@ -12,7 +12,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 if (!JWT_SECRET || JWT_SECRET.length < 32) {
   throw new Error(
-    'JWT_SECRET absent ou trop court. Vérifiez la configuration du fichier .env.'
+    'JWT_SECRET absent ou trop court. VÃ©rifiez la configuration du fichier .env.'
   );
 }
 
@@ -60,7 +60,7 @@ async function saveRefreshToken(db, userId, token) {
   });
 }
 
-// Middleware : vérifier le jeton JWT et identifier l'utilisateur.
+// Middleware : vÃ©rifier le jeton JWT et identifier l'utilisateur.
 function authenticateToken(req, res, next) {
   const authorization = req.headers.authorization;
 
@@ -97,7 +97,7 @@ function authenticateToken(req, res, next) {
 
     if (!Number.isSafeInteger(userId) || userId <= 0) {
       return res.status(401).json({
-        message: 'Identité utilisateur invalide',
+        message: 'IdentitÃ© utilisateur invalide',
       });
     }
 
@@ -105,7 +105,7 @@ function authenticateToken(req, res, next) {
     return next();
   } catch {
     return res.status(401).json({
-      message: 'Jeton invalide ou expiré',
+      message: 'Jeton invalide ou expirÃ©',
     });
   }
 }
@@ -145,14 +145,14 @@ app.post('/api/auth/register', async (req, res) => {
   ) {
     return res.status(400).json({
       message:
-        'Le mot de passe doit contenir au moins 8 caractères et ne pas dépasser 72 octets',
+        'Le mot de passe doit contenir au moins 8 caractÃ¨res et ne pas dÃ©passer 72 octets',
     });
   }
 
   if (username !== undefined && username !== null) {
     if (typeof username !== 'string') {
       return res.status(400).json({
-        message: 'Nom d’utilisateur invalide',
+        message: 'Nom dâ€™utilisateur invalide',
       });
     }
 
@@ -163,7 +163,7 @@ app.post('/api/auth/register', async (req, res) => {
     } else if (username.length < 2 || username.length > 30) {
       return res.status(400).json({
         message:
-          'Le nom d’utilisateur doit contenir entre 2 et 30 caractères',
+          'Le nom dâ€™utilisateur doit contenir entre 2 et 30 caractÃ¨res',
       });
     }
   } else {
@@ -179,7 +179,7 @@ app.post('/api/auth/register', async (req, res) => {
 
     if (existingEmail) {
       return res.status(409).json({
-        message: 'Cette adresse email est déjà utilisée',
+        message: 'Cette adresse email est dÃ©jÃ  utilisÃ©e',
       });
     }
 
@@ -190,7 +190,7 @@ app.post('/api/auth/register', async (req, res) => {
 
       if (existingUsername) {
         return res.status(409).json({
-          message: 'Ce nom d’utilisateur est déjà utilisé',
+          message: 'Ce nom dâ€™utilisateur est dÃ©jÃ  utilisÃ©',
         });
       }
     }
@@ -204,7 +204,7 @@ app.post('/api/auth/register', async (req, res) => {
     });
 
     return res.status(201).json({
-      message: 'Compte créé avec succès',
+      message: 'Compte crÃ©Ã© avec succÃ¨s',
       user: {
         id: user.id,
         email: user.email,
@@ -212,15 +212,15 @@ app.post('/api/auth/register', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Erreur lors de l’inscription :', error);
+    console.error('Erreur lors de lâ€™inscription :', error);
 
     return res.status(500).json({
-      message: 'Erreur lors de la création du compte',
+      message: 'Erreur lors de la crÃ©ation du compte',
     });
   }
 });
 
-// Connexion : création des deux jetons.
+// Connexion : crÃ©ation des deux jetons.
 app.post('/api/auth/login', async (req, res) => {
   const { email, password } = req.body ?? {};
 
@@ -251,7 +251,7 @@ app.post('/api/auth/login', async (req, res) => {
     await saveRefreshToken(db, user.id, refreshToken);
 
     return res.json({
-      message: 'Connexion réussie',
+      message: 'Connexion rÃ©ussie',
       token: accessToken,
       tokenType: 'Bearer',
       expiresIn: ACCESS_TOKEN_SECONDS,
@@ -272,7 +272,7 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-// Renouvellement : le jeton précédent est remplacé par un nouveau.
+// Renouvellement : le jeton prÃ©cÃ©dent est remplacÃ© par un nouveau.
 app.post('/api/auth/refresh', async (req, res) => {
   const { refreshToken } = req.body ?? {};
 
@@ -282,7 +282,7 @@ app.post('/api/auth/refresh', async (req, res) => {
     refreshToken.length > 200
   ) {
     return res.status(401).json({
-      message: 'Jeton de renouvellement invalide ou expiré',
+      message: 'Jeton de renouvellement invalide ou expirÃ©',
     });
   }
 
@@ -296,7 +296,7 @@ app.post('/api/auth/refresh', async (req, res) => {
 
     if (!storedToken) {
       return res.status(401).json({
-        message: 'Jeton de renouvellement invalide ou expiré',
+        message: 'Jeton de renouvellement invalide ou expirÃ©',
       });
     }
 
@@ -306,7 +306,7 @@ app.post('/api/auth/refresh', async (req, res) => {
         .delete();
 
       return res.status(401).json({
-        message: 'Jeton de renouvellement invalide ou expiré',
+        message: 'Jeton de renouvellement invalide ou expirÃ©',
       });
     }
 
@@ -324,7 +324,7 @@ app.post('/api/auth/refresh', async (req, res) => {
       });
     }
 
-    // Invalider l'ancien jeton avant d'en émettre un nouveau.
+    // Invalider l'ancien jeton avant d'en Ã©mettre un nouveau.
     await db.orm.public.RefreshToken
       .where({ id: storedToken.id })
       .delete();
@@ -336,7 +336,7 @@ app.post('/api/auth/refresh', async (req, res) => {
     const accessToken = createAccessToken(user.id);
 
     return res.json({
-      message: 'Session renouvelée',
+      message: 'Session renouvelÃ©e',
       token: accessToken,
       tokenType: 'Bearer',
       expiresIn: ACCESS_TOKEN_SECONDS,
@@ -352,7 +352,7 @@ app.post('/api/auth/refresh', async (req, res) => {
   }
 });
 
-// Déconnexion : révocation du jeton de renouvellement côté serveur.
+// DÃ©connexion : rÃ©vocation du jeton de renouvellement cÃ´tÃ© serveur.
 app.post('/api/auth/logout', async (req, res) => {
   const { refreshToken } = req.body ?? {};
 
@@ -370,15 +370,15 @@ app.post('/api/auth/logout', async (req, res) => {
         .delete();
     }
 
-    // Réponse identique même si le jeton est absent ou inconnu.
+    // RÃ©ponse identique mÃªme si le jeton est absent ou inconnu.
     return res.json({
-      message: 'Déconnexion effectuée',
+      message: 'DÃ©connexion effectuÃ©e',
     });
   } catch (error) {
-    console.error('Erreur lors de la déconnexion :', error);
+    console.error('Erreur lors de la dÃ©connexion :', error);
 
     return res.status(500).json({
-      message: 'Erreur lors de la déconnexion',
+      message: 'Erreur lors de la dÃ©connexion',
     });
   }
 });
@@ -395,15 +395,15 @@ app.get('/api/spots', async (req, res) => {
       spots,
     });
   } catch (error) {
-    console.error('Erreur lors de la récupération des spots :', error);
+    console.error('Erreur lors de la rÃ©cupÃ©ration des spots :', error);
 
     return res.status(500).json({
-      message: 'Erreur lors de la récupération des spots',
+      message: 'Erreur lors de la rÃ©cupÃ©ration des spots',
     });
   }
 });
 
-// Détail d'un spot
+// DÃ©tail d'un spot
 app.get('/api/spots/:id', async (req, res) => {
   const id = Number(req.params.id);
 
@@ -427,19 +427,19 @@ app.get('/api/spots/:id', async (req, res) => {
     }
 
     return res.json({
-      message: 'Détail du spot',
+      message: 'DÃ©tail du spot',
       spot,
     });
   } catch (error) {
-    console.error('Erreur lors de la récupération du spot :', error);
+    console.error('Erreur lors de la rÃ©cupÃ©ration du spot :', error);
 
     return res.status(500).json({
-      message: 'Erreur lors de la récupération du spot',
+      message: 'Erreur lors de la rÃ©cupÃ©ration du spot',
     });
   }
 });
 
-// Création d'un spot : JWT obligatoire
+// CrÃ©ation d'un spot : JWT obligatoire
 app.post('/api/spots', authenticateToken, async (req, res) => {
   const {
     name,
@@ -462,7 +462,7 @@ app.post('/api/spots', authenticateToken, async (req, res) => {
     longitude > 180
   ) {
     return res.status(400).json({
-      message: 'Données invalides : nom et coordonnées requis',
+      message: 'DonnÃ©es invalides : nom et coordonnÃ©es requis',
     });
   }
 
@@ -476,7 +476,7 @@ app.post('/api/spots', authenticateToken, async (req, res) => {
   ) {
     return res.status(400).json({
       message:
-        'La description et l’adresse doivent être des chaînes de caractères',
+        'La description et lâ€™adresse doivent Ãªtre des chaÃ®nes de caractÃ¨res',
     });
   }
 
@@ -490,7 +490,7 @@ app.post('/api/spots', authenticateToken, async (req, res) => {
 
     if (!user) {
       return res.status(401).json({
-        message: 'Utilisateur authentifié introuvable',
+        message: 'Utilisateur authentifiÃ© introuvable',
       });
     }
 
@@ -504,18 +504,20 @@ app.post('/api/spots', authenticateToken, async (req, res) => {
     });
 
     return res.status(201).json({
-      message: 'Spot créé avec succès',
+      message: 'Spot crÃ©Ã© avec succÃ¨s',
       spot,
     });
   } catch (error) {
-    console.error('Erreur lors de la création du spot :', error);
+    console.error('Erreur lors de la crÃ©ation du spot :', error);
 
     return res.status(500).json({
-      message: 'Erreur lors de la création du spot',
+      message: 'Erreur lors de la crÃ©ation du spot',
     });
   }
 });
 
+const { registerMediaRoutes } = require('./media_routes');
+registerMediaRoutes(app, { getDb, authenticateToken });
 app.listen(PORT, () => {
-  console.log(`Serveur SkateSpot démarré sur le port ${PORT}`);
+  console.log(`Serveur SkateSpot dÃ©marrÃ© sur le port ${PORT}`);
 });

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../map/map_screen.dart';
 
 import '../../services/spot_service.dart';
 import '../spots/create_spot_screen.dart';
@@ -92,6 +93,17 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('SkateSpot'),
         centerTitle: true,
         actions: [
+          IconButton(
+            tooltip: 'Afficher la carte',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const MapScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.map_outlined),
+          ),
           IconButton(
             tooltip: 'Créer un spot',
             onPressed: _isOpeningCreateScreen

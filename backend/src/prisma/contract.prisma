@@ -1,43 +1,68 @@
-
- // use prisma-8
+// use prisma-8
 
 model User {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
-  username     String?       @unique
-  passwordHash String
-  spots        SkateSpot[]
-  media        SpotMedia[]
-  comments     SpotComment[]
-  createdAt    TimestamptzString @default(now())
-  updatedAt    temporal.updatedAtString()
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
+  username      String?       @unique
+  passwordHash  String
+  spots         SkateSpot[]
+  media         SpotMedia[]
+  comments      SpotComment[]
+  reports       SpotMediaReport[]
+  createdAt     TimestamptzString @default(now())
+  updatedAt     temporal.updatedAtString()
   refreshTokens RefreshToken[]
 }
 
 model SkateSpot {
-  id          Int           @id @default(autoincrement())
-  name        String
-  description String?
-  address     String?
-  latitude    Float
-  longitude   Float
-  createdById Int
-  createdBy   User          @relation(fields: [createdById], references: [id])
-  media       SpotMedia[]
-  comments    SpotComment[]
-  createdAt   TimestamptzString @default(now())
-  updatedAt   temporal.updatedAtString()
+  id             Int           @id @default(autoincrement())
+  name           String
+  description    String?
+  address        String?
+  latitude       Float
+  longitude      Float
+
+  // Identification de la source externe
+  externalSource String?
+  externalId     String?
+
+  createdById    Int
+  createdBy      User          @relation(fields: [createdById], references: [id])
+  media          SpotMedia[]
+  comments       SpotComment[]
+  createdAt      TimestamptzString @default(now())
+  updatedAt      temporal.updatedAtString()
+
+  // Un spot externe ne peut être importé qu'une seule fois
+  @@unique([externalSource, externalId])
 }
 
 model SpotMedia {
-  id        Int           @id @default(autoincrement())
-  url       String
-  type      String
-  userId    Int
-  spotId    Int
-  user      User          @relation(fields: [userId], references: [id])
-  spot      SkateSpot     @relation(fields: [spotId], references: [id])
-  createdAt TimestamptzString @default(now())
+  id               Int           @id @default(autoincrement())
+  url              String
+  type             String
+  storageKey       String?
+  moderationStatus String        @default("approved")
+  moderationReason String?
+  deletedAt        TimestamptzString?
+  userId           Int
+  spotId           Int
+  user             User          @relation(fields: [userId], references: [id])
+  spot             SkateSpot     @relation(fields: [spotId], references: [id])
+  reports          SpotMediaReport[]
+  createdAt        TimestamptzString @default(now())
+}
+
+model SpotMediaReport {
+  id         Int           @id @default(autoincrement())
+  mediaId    Int
+  reporterId Int
+  reason     String
+  status     String        @default("pending")
+  reviewedAt TimestamptzString?
+  media      SpotMedia     @relation(fields: [mediaId], references: [id])
+  reporter   User          @relation(fields: [reporterId], references: [id])
+  createdAt  TimestamptzString @default(now())
 }
 
 model SpotComment {

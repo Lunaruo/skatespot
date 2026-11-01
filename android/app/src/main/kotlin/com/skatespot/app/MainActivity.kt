@@ -1,4 +1,4 @@
-package com.example.skatespot
+package com.skatespot.app
 
 import io.flutter.embedding.android.FlutterActivity
 
