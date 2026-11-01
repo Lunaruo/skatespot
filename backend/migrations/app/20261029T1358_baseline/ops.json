@@ -1,0 +1,826 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.RefreshToken",
+    "label": "Create table \"RefreshToken\"",
+    "summary": "Creates table \"RefreshToken\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "RefreshToken"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"RefreshToken\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"RefreshToken\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"RefreshToken\"",
+        "sql": "CREATE TABLE \"public\".\"RefreshToken\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"expiresAt\" timestamptz NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"tokenHash\" text NOT NULL,\n  \"userId\" int4 NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"RefreshToken\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"RefreshToken\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.SkateSpot",
+    "label": "Create table \"SkateSpot\"",
+    "summary": "Creates table \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"SkateSpot\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SkateSpot\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"SkateSpot\"",
+        "sql": "CREATE TABLE \"public\".\"SkateSpot\" (\n  \"address\" text,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"createdById\" int4 NOT NULL,\n  \"description\" text,\n  \"id\" SERIAL NOT NULL,\n  \"latitude\" float8 NOT NULL,\n  \"longitude\" float8 NOT NULL,\n  \"name\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"SkateSpot\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SkateSpot\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.SpotComment",
+    "label": "Create table \"SpotComment\"",
+    "summary": "Creates table \"SpotComment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "SpotComment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"SpotComment\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotComment\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"SpotComment\"",
+        "sql": "CREATE TABLE \"public\".\"SpotComment\" (\n  \"content\" text NOT NULL,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"spotId\" int4 NOT NULL,\n  \"userId\" int4 NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"SpotComment\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotComment\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.SpotMedia",
+    "label": "Create table \"SpotMedia\"",
+    "summary": "Creates table \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"SpotMedia\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMedia\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"SpotMedia\"",
+        "sql": "CREATE TABLE \"public\".\"SpotMedia\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"spotId\" int4 NOT NULL,\n  \"type\" text NOT NULL,\n  \"url\" text NOT NULL,\n  \"userId\" int4 NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"SpotMedia\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMedia\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.User",
+    "label": "Create table \"User\"",
+    "summary": "Creates table \"User\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"User\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"User\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"User\"",
+        "sql": "CREATE TABLE \"public\".\"User\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"email\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"passwordHash\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  \"username\" text,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"User\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"User\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.RefreshToken.RefreshToken_tokenHash_key",
+    "label": "Add unique constraint on \"RefreshToken\" (tokenHash)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "RefreshToken_tokenHash_key",
+        "table": "RefreshToken"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"RefreshToken_tokenHash_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "RefreshToken_tokenHash_key",
+          "public",
+          "\"public\".\"RefreshToken\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"RefreshToken_tokenHash_key\"",
+        "sql": "ALTER TABLE \"public\".\"RefreshToken\" ADD CONSTRAINT \"RefreshToken_tokenHash_key\" UNIQUE (\"tokenHash\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"RefreshToken_tokenHash_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "RefreshToken_tokenHash_key",
+          "public",
+          "\"public\".\"RefreshToken\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.User.User_email_key",
+    "label": "Add unique constraint on \"User\" (email)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "User_email_key",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"User_email_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "User_email_key",
+          "public",
+          "\"public\".\"User\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"User_email_key\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ADD CONSTRAINT \"User_email_key\" UNIQUE (\"email\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"User_email_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "User_email_key",
+          "public",
+          "\"public\".\"User\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.User.User_username_key",
+    "label": "Add unique constraint on \"User\" (username)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "User_username_key",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"User_username_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "User_username_key",
+          "public",
+          "\"public\".\"User\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"User_username_key\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ADD CONSTRAINT \"User_username_key\" UNIQUE (\"username\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"User_username_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "User_username_key",
+          "public",
+          "\"public\".\"User\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.RefreshToken.RefreshToken_userId_idx_a489d58a",
+    "label": "Create index \"RefreshToken_userId_idx_a489d58a\" on \"RefreshToken\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "RefreshToken_userId_idx_a489d58a",
+        "table": "RefreshToken"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"RefreshToken_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"RefreshToken_userId_idx_a489d58a\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"RefreshToken_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"RefreshToken_userId_idx_a489d58a\" ON \"public\".\"RefreshToken\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"RefreshToken_userId_idx_a489d58a\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"RefreshToken_userId_idx_a489d58a\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SkateSpot.SkateSpot_createdById_idx_8bf640ed",
+    "label": "Create index \"SkateSpot_createdById_idx_8bf640ed\" on \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SkateSpot_createdById_idx_8bf640ed",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SkateSpot_createdById_idx_8bf640ed\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SkateSpot_createdById_idx_8bf640ed\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SkateSpot_createdById_idx_8bf640ed\"",
+        "sql": "CREATE INDEX \"SkateSpot_createdById_idx_8bf640ed\" ON \"public\".\"SkateSpot\" (\"createdById\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SkateSpot_createdById_idx_8bf640ed\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SkateSpot_createdById_idx_8bf640ed\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotComment.SpotComment_spotId_idx_2a0d61dc",
+    "label": "Create index \"SpotComment_spotId_idx_2a0d61dc\" on \"SpotComment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotComment_spotId_idx_2a0d61dc",
+        "table": "SpotComment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotComment_spotId_idx_2a0d61dc\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotComment_spotId_idx_2a0d61dc\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotComment_spotId_idx_2a0d61dc\"",
+        "sql": "CREATE INDEX \"SpotComment_spotId_idx_2a0d61dc\" ON \"public\".\"SpotComment\" (\"spotId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotComment_spotId_idx_2a0d61dc\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotComment_spotId_idx_2a0d61dc\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotComment.SpotComment_userId_idx_a489d58a",
+    "label": "Create index \"SpotComment_userId_idx_a489d58a\" on \"SpotComment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotComment_userId_idx_a489d58a",
+        "table": "SpotComment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotComment_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotComment_userId_idx_a489d58a\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotComment_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"SpotComment_userId_idx_a489d58a\" ON \"public\".\"SpotComment\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotComment_userId_idx_a489d58a\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotComment_userId_idx_a489d58a\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotMedia.SpotMedia_spotId_idx_2a0d61dc",
+    "label": "Create index \"SpotMedia_spotId_idx_2a0d61dc\" on \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotMedia_spotId_idx_2a0d61dc",
+        "table": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotMedia_spotId_idx_2a0d61dc\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMedia_spotId_idx_2a0d61dc\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotMedia_spotId_idx_2a0d61dc\"",
+        "sql": "CREATE INDEX \"SpotMedia_spotId_idx_2a0d61dc\" ON \"public\".\"SpotMedia\" (\"spotId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotMedia_spotId_idx_2a0d61dc\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMedia_spotId_idx_2a0d61dc\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotMedia.SpotMedia_userId_idx_a489d58a",
+    "label": "Create index \"SpotMedia_userId_idx_a489d58a\" on \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotMedia_userId_idx_a489d58a",
+        "table": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotMedia_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMedia_userId_idx_a489d58a\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotMedia_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"SpotMedia_userId_idx_a489d58a\" ON \"public\".\"SpotMedia\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotMedia_userId_idx_a489d58a\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMedia_userId_idx_a489d58a\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.RefreshToken.RefreshToken_userId_fkey",
+    "label": "Add foreign key \"RefreshToken_userId_fkey\" on \"RefreshToken\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "RefreshToken_userId_fkey",
+        "table": "RefreshToken"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"RefreshToken_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "RefreshToken_userId_fkey",
+          "public",
+          "\"public\".\"RefreshToken\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"RefreshToken_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"RefreshToken\"\nADD CONSTRAINT \"RefreshToken_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"RefreshToken_userId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "RefreshToken_userId_fkey",
+          "public",
+          "\"public\".\"RefreshToken\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SkateSpot.SkateSpot_createdById_fkey",
+    "label": "Add foreign key \"SkateSpot_createdById_fkey\" on \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SkateSpot_createdById_fkey",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SkateSpot_createdById_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SkateSpot_createdById_fkey",
+          "public",
+          "\"public\".\"SkateSpot\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SkateSpot_createdById_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SkateSpot\"\nADD CONSTRAINT \"SkateSpot_createdById_fkey\"\nFOREIGN KEY (\"createdById\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SkateSpot_createdById_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SkateSpot_createdById_fkey",
+          "public",
+          "\"public\".\"SkateSpot\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotComment.SpotComment_userId_fkey",
+    "label": "Add foreign key \"SpotComment_userId_fkey\" on \"SpotComment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotComment_userId_fkey",
+        "table": "SpotComment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotComment_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotComment_userId_fkey",
+          "public",
+          "\"public\".\"SpotComment\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotComment_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotComment\"\nADD CONSTRAINT \"SpotComment_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotComment_userId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotComment_userId_fkey",
+          "public",
+          "\"public\".\"SpotComment\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotComment.SpotComment_spotId_fkey",
+    "label": "Add foreign key \"SpotComment_spotId_fkey\" on \"SpotComment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotComment_spotId_fkey",
+        "table": "SpotComment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotComment_spotId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotComment_spotId_fkey",
+          "public",
+          "\"public\".\"SpotComment\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotComment_spotId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotComment\"\nADD CONSTRAINT \"SpotComment_spotId_fkey\"\nFOREIGN KEY (\"spotId\")\nREFERENCES \"public\".\"SkateSpot\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotComment_spotId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotComment_spotId_fkey",
+          "public",
+          "\"public\".\"SpotComment\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotMedia.SpotMedia_userId_fkey",
+    "label": "Add foreign key \"SpotMedia_userId_fkey\" on \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotMedia_userId_fkey",
+        "table": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotMedia_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotMedia_userId_fkey",
+          "public",
+          "\"public\".\"SpotMedia\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotMedia_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMedia\"\nADD CONSTRAINT \"SpotMedia_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotMedia_userId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotMedia_userId_fkey",
+          "public",
+          "\"public\".\"SpotMedia\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotMedia.SpotMedia_spotId_fkey",
+    "label": "Add foreign key \"SpotMedia_spotId_fkey\" on \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotMedia_spotId_fkey",
+        "table": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotMedia_spotId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotMedia_spotId_fkey",
+          "public",
+          "\"public\".\"SpotMedia\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotMedia_spotId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMedia\"\nADD CONSTRAINT \"SpotMedia_spotId_fkey\"\nFOREIGN KEY (\"spotId\")\nREFERENCES \"public\".\"SkateSpot\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotMedia_spotId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotMedia_spotId_fkey",
+          "public",
+          "\"public\".\"SpotMedia\""
+        ]
+      }
+    ]
+  }
+]

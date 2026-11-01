@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+
+# Fichiers générés par Prisma pour les assistants de développement
+.agents/
+.claude/
+.cursor/
+.devin/
