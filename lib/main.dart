@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'screens/auth/login_screen.dart';
@@ -19,9 +18,7 @@ class SkateSpotApp extends StatelessWidget {
       title: 'SkateSpot',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const AuthGate(),
@@ -46,8 +43,8 @@ class _AuthGateState extends State<AuthGate> {
   }
 
   Future<bool> _checkAuthentication() async {
-  return AuthService.hasValidSession();
-}
+    return AuthService.hasValidSession();
+  }
 
   void _onLoginSuccess() {
     setState(() {
@@ -72,9 +69,7 @@ class _AuthGateState extends State<AuthGate> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
+            body: Center(child: CircularProgressIndicator()),
           );
         }
 
@@ -94,8 +89,7 @@ class _AuthGateState extends State<AuthGate> {
                     FilledButton(
                       onPressed: () {
                         setState(() {
-                          _authenticationFuture =
-                              _checkAuthentication();
+                          _authenticationFuture = _checkAuthentication();
                         });
                       },
                       child: const Text('Réessayer'),
@@ -111,9 +105,7 @@ class _AuthGateState extends State<AuthGate> {
           return HomeScreen(onLogout: _logout);
         }
 
-        return LoginScreen(
-          onLoginSuccess: _onLoginSuccess,
-        );
+        return LoginScreen(onLoginSuccess: _onLoginSuccess);
       },
     );
   }

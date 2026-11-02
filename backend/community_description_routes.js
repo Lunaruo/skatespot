@@ -263,19 +263,7 @@ function registerCommunityDescriptionRoutes(
           });
         }
 
-        // RideMyPark : ne pas créer une description communautaire
-        // si une description originale existe déjà.
-        if (
-          isRideMyPark &&
-          !existingDescription &&
-          typeof spot.description === 'string' &&
-          spot.description.trim().length > 0
-        ) {
-          return res.status(409).json({
-            message:
-              'Ce spot possède déjà une description originale RideMyPark.',
-          });
-        }
+
 
         const isFirstCreation = !existingDescription;
         const now = new Date().toISOString();

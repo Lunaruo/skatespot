@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,9 +27,7 @@ class AuthService {
         return false;
       }
 
-      final payloadBytes = base64Url.decode(
-        base64Url.normalize(parts[1]),
-      );
+      final payloadBytes = base64Url.decode(base64Url.normalize(parts[1]));
 
       final payload =
           jsonDecode(utf8.decode(payloadBytes)) as Map<String, dynamic>;
@@ -77,9 +74,7 @@ class AuthService {
     final response = await http
         .post(
           Uri.parse('$baseUrl/api/auth/register'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: {'Content-Type': 'application/json'},
           body: jsonEncode({
             'email': email.trim(),
             'password': password,
@@ -102,13 +97,8 @@ class AuthService {
     final response = await http
         .post(
           Uri.parse('$baseUrl/api/auth/login'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode({
-            'email': email.trim(),
-            'password': password,
-          }),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'email': email.trim(), 'password': password}),
         )
         .timeout(_requestTimeout);
 
@@ -116,8 +106,7 @@ class AuthService {
       throw Exception(_readError(response));
     }
 
-    final data =
-        jsonDecode(response.body) as Map<String, dynamic>;
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
 
     final token = data['token']?.toString();
     final refreshToken = data['refreshToken']?.toString();
@@ -132,23 +121,15 @@ class AuthService {
     }
 
     // Enregistrer le jeton de renouvellement en premier.
-    await _storage.write(
-      key: _refreshTokenKey,
-      value: refreshToken,
-    );
+    await _storage.write(key: _refreshTokenKey, value: refreshToken);
 
-    await _storage.write(
-      key: _tokenKey,
-      value: token,
-    );
+    await _storage.write(key: _tokenKey, value: token);
   }
 
   // Demande au serveur une nouvelle paire de jetons.
   // Retourne le nouveau jeton d'accès, ou null en cas d'échec.
   static Future<String?> refreshAccessToken() async {
-    final refreshToken = await _storage.read(
-      key: _refreshTokenKey,
-    );
+    final refreshToken = await _storage.read(key: _refreshTokenKey);
 
     if (refreshToken == null || refreshToken.isEmpty) {
       await _clearLocalTokens();
@@ -159,12 +140,8 @@ class AuthService {
       final response = await http
           .post(
             Uri.parse('$baseUrl/api/auth/refresh'),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: jsonEncode({
-              'refreshToken': refreshToken,
-            }),
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode({'refreshToken': refreshToken}),
           )
           .timeout(_requestTimeout);
 
@@ -180,8 +157,7 @@ class AuthService {
         return null;
       }
 
-      final data =
-          jsonDecode(response.body) as Map<String, dynamic>;
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
 
       final newToken = data['token']?.toString();
       final newRefreshToken = data['refreshToken']?.toString();
@@ -195,15 +171,9 @@ class AuthService {
 
       // Enregistrer le nouveau jeton de renouvellement avant
       // de remplacer le jeton d'accès.
-      await _storage.write(
-        key: _refreshTokenKey,
-        value: newRefreshToken,
-      );
+      await _storage.write(key: _refreshTokenKey, value: newRefreshToken);
 
-      await _storage.write(
-        key: _tokenKey,
-        value: newToken,
-      );
+      await _storage.write(key: _tokenKey, value: newToken);
 
       return newToken;
     } catch (_) {
@@ -214,21 +184,15 @@ class AuthService {
 
   // Déconnexion locale et révocation de la session sur le serveur.
   static Future<void> logout() async {
-    final refreshToken = await _storage.read(
-      key: _refreshTokenKey,
-    );
+    final refreshToken = await _storage.read(key: _refreshTokenKey);
 
     try {
       if (refreshToken != null && refreshToken.isNotEmpty) {
         await http
             .post(
               Uri.parse('$baseUrl/api/auth/logout'),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: jsonEncode({
-                'refreshToken': refreshToken,
-              }),
+              headers: {'Content-Type': 'application/json'},
+              body: jsonEncode({'refreshToken': refreshToken}),
             )
             .timeout(_requestTimeout);
       }
@@ -248,8 +212,7 @@ class AuthService {
 
   static String _readError(http.Response response) {
     try {
-      final data =
-          jsonDecode(response.body) as Map<String, dynamic>;
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
 
       final message = data['message'] ?? data['error'];
 

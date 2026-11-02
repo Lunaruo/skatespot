@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../services/auth_service.dart';
@@ -7,10 +6,7 @@ import 'register_screen.dart';
 class LoginScreen extends StatefulWidget {
   final VoidCallback onLoginSuccess;
 
-  const LoginScreen({
-    super.key,
-    required this.onLoginSuccess,
-  });
+  const LoginScreen({super.key, required this.onLoginSuccess});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -52,9 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
 
       setState(() {
-        _errorMessage = error
-            .toString()
-            .replaceFirst('Exception: ', '');
+        _errorMessage = error.toString().replaceFirst('Exception: ', '');
       });
     } finally {
       if (mounted) {
@@ -69,9 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (_) => RegisterScreen(
           onRegisterSuccess: () {
             Navigator.of(context).pop();
-            _showMessage(
-              'Compte créé. Vous pouvez vous connecter.',
-            );
+            _showMessage('Compte créé. Vous pouvez vous connecter.');
           },
         ),
       ),
@@ -79,9 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -92,25 +83,18 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: 420,
-              ),
+              constraints: const BoxConstraints(maxWidth: 420),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Icon(
-                      Icons.skateboarding,
-                      size: 72,
-                    ),
+                    const Icon(Icons.skateboarding, size: 72),
                     const SizedBox(height: 16),
                     Text(
                       'SkateSpot',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium
+                      style: Theme.of(context).textTheme.headlineMedium
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
@@ -198,9 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 12),
                     TextButton(
                       onPressed: _isLoading ? null : _openRegister,
-                      child: const Text(
-                        'Pas encore de compte ? S’inscrire',
-                      ),
+                      child: const Text('Pas encore de compte ? S’inscrire'),
                     ),
                   ],
                 ),
