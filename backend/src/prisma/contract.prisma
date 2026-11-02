@@ -5,9 +5,12 @@ model User {
   email         String        @unique
   username      String?       @unique
   passwordHash  String
-  spots         SkateSpot[]
+  spots SkateSpot[] @relation("SpotCreator")
   media         SpotMedia[]
   comments      SpotComment[]
+  communityDescriptions SkateSpot[] @relation("CommunityDescriptionAuthor")
+  communityDescriptionReports SpotCommunityDescriptionReport[]
+  commentReports SpotCommentReport[]
   reports       SpotMediaReport[]
   createdAt     TimestamptzString @default(now())
   updatedAt     temporal.updatedAtString()
@@ -18,6 +21,10 @@ model SkateSpot {
   id             Int           @id @default(autoincrement())
   name           String
   description    String?
+  communityDescription          String?
+  communityDescriptionAuthorId  Int?
+  communityDescriptionUpdatedAt TimestamptzString?
+  communityDescriptionReports SpotCommunityDescriptionReport[]
   address        String?
   latitude       Float
   longitude      Float
@@ -27,7 +34,18 @@ model SkateSpot {
   externalId     String?
 
   createdById    Int
-  createdBy      User          @relation(fields: [createdById], references: [id])
+    createdBy User @relation(
+      "SpotCreator",
+      fields: [createdById],
+      references: [id]
+    )
+
+    communityDescriptionAuthor User? @relation(
+      "CommunityDescriptionAuthor",
+      fields: [communityDescriptionAuthorId],
+      references: [id]
+    )
+
   media          SpotMedia[]
   comments       SpotComment[]
   createdAt      TimestamptzString @default(now())
@@ -58,11 +76,16 @@ model SpotMediaReport {
   mediaId    Int
   reporterId Int
   reason     String
+  details    String?
   status     String        @default("pending")
   reviewedAt TimestamptzString?
   media      SpotMedia     @relation(fields: [mediaId], references: [id])
   reporter   User          @relation(fields: [reporterId], references: [id])
   createdAt  TimestamptzString @default(now())
+
+    @@index([mediaId])
+    @@index([reporterId])
+    @@index([status])
 }
 
 model SpotComment {
@@ -73,6 +96,7 @@ model SpotComment {
   user      User          @relation(fields: [userId], references: [id])
   spot      SkateSpot     @relation(fields: [spotId], references: [id])
   createdAt TimestamptzString @default(now())
+  reports SpotCommentReport[]
 }
 
 model RefreshToken {
@@ -82,4 +106,42 @@ model RefreshToken {
   user      User             @relation(fields: [userId], references: [id])
   expiresAt TimestamptzString
   createdAt TimestamptzString @default(now())
+}
+
+model SpotCommunityDescriptionReport {
+  id                  Int           @id @default(autoincrement())
+  spotId              Int
+  reporterId          Int
+  reason              String
+  details             String?
+  descriptionSnapshot String
+  status              String        @default("pending")
+  reviewedAt          TimestamptzString?
+  createdAt           TimestamptzString @default(now())
+
+  spot     SkateSpot @relation(fields: [spotId], references: [id])
+  reporter User      @relation(fields: [reporterId], references: [id])
+
+  @@index([spotId])
+  @@index([reporterId])
+  @@index([status])
+}
+
+model SpotCommentReport {
+  id                  Int           @id @default(autoincrement())
+  commentId           Int
+  reporterId          Int
+  reason              String
+  details             String?
+  contentSnapshot     String
+  status              String        @default("pending")
+  reviewedAt          TimestamptzString?
+  createdAt           TimestamptzString @default(now())
+
+  comment  SpotComment @relation(fields: [commentId], references: [id])
+  reporter User        @relation(fields: [reporterId], references: [id])
+
+  @@index([commentId])
+  @@index([reporterId])
+  @@index([status])
 }

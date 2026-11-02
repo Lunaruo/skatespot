@@ -16,6 +16,14 @@
       "model": "SpotComment",
       "namespace": "public"
     },
+    "SpotCommentReport": {
+      "model": "SpotCommentReport",
+      "namespace": "public"
+    },
+    "SpotCommunityDescriptionReport": {
+      "model": "SpotCommunityDescriptionReport",
+      "namespace": "public"
+    },
     "SpotMedia": {
       "model": "SpotMedia",
       "namespace": "public"
@@ -120,6 +128,27 @@
                   "kind": "scalar"
                 }
               },
+              "communityDescription": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "communityDescriptionAuthorId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "communityDescriptionUpdatedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
               "createdAt": {
                 "nullable": false,
                 "type": {
@@ -207,6 +236,37 @@
                   "namespace": "public"
                 }
               },
+              "communityDescriptionAuthor": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "communityDescriptionAuthorId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "User",
+                  "namespace": "public"
+                }
+              },
+              "communityDescriptionReports": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "spotId"
+                  ]
+                },
+                "to": {
+                  "model": "SpotCommunityDescriptionReport",
+                  "namespace": "public"
+                }
+              },
               "createdBy": {
                 "cardinality": "N:1",
                 "nullable": false,
@@ -243,6 +303,15 @@
               "fields": {
                 "address": {
                   "column": "address"
+                },
+                "communityDescription": {
+                  "column": "communityDescription"
+                },
+                "communityDescriptionAuthorId": {
+                  "column": "communityDescriptionAuthorId"
+                },
+                "communityDescriptionUpdatedAt": {
+                  "column": "communityDescriptionUpdatedAt"
                 },
                 "createdAt": {
                   "column": "createdAt"
@@ -318,6 +387,21 @@
               }
             },
             "relations": {
+              "reports": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "commentId"
+                  ]
+                },
+                "to": {
+                  "model": "SpotCommentReport",
+                  "namespace": "public"
+                }
+              },
               "spot": {
                 "cardinality": "N:1",
                 "nullable": false,
@@ -371,6 +455,274 @@
               },
               "namespaceId": "public",
               "table": "SpotComment"
+            }
+          },
+          "SpotCommentReport": {
+            "fields": {
+              "commentId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "contentSnapshot": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "details": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "reason": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "reporterId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "reviewedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "status": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "comment": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "commentId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "SpotComment",
+                  "namespace": "public"
+                }
+              },
+              "reporter": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "reporterId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "User",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "commentId": {
+                  "column": "commentId"
+                },
+                "contentSnapshot": {
+                  "column": "contentSnapshot"
+                },
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "details": {
+                  "column": "details"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "reason": {
+                  "column": "reason"
+                },
+                "reporterId": {
+                  "column": "reporterId"
+                },
+                "reviewedAt": {
+                  "column": "reviewedAt"
+                },
+                "status": {
+                  "column": "status"
+                }
+              },
+              "namespaceId": "public",
+              "table": "SpotCommentReport"
+            }
+          },
+          "SpotCommunityDescriptionReport": {
+            "fields": {
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "descriptionSnapshot": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "details": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "reason": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "reporterId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "reviewedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "spotId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "status": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "reporter": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "reporterId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "User",
+                  "namespace": "public"
+                }
+              },
+              "spot": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "spotId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "SkateSpot",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "descriptionSnapshot": {
+                  "column": "descriptionSnapshot"
+                },
+                "details": {
+                  "column": "details"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "reason": {
+                  "column": "reason"
+                },
+                "reporterId": {
+                  "column": "reporterId"
+                },
+                "reviewedAt": {
+                  "column": "reviewedAt"
+                },
+                "spotId": {
+                  "column": "spotId"
+                },
+                "status": {
+                  "column": "status"
+                }
+              },
+              "namespaceId": "public",
+              "table": "SpotCommunityDescriptionReport"
             }
           },
           "SpotMedia": {
@@ -541,6 +893,13 @@
                   "kind": "scalar"
                 }
               },
+              "details": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "id": {
                 "nullable": false,
                 "type": {
@@ -623,6 +982,9 @@
                 "createdAt": {
                   "column": "createdAt"
                 },
+                "details": {
+                  "column": "details"
+                },
                 "id": {
                   "column": "id"
                 },
@@ -692,6 +1054,21 @@
               }
             },
             "relations": {
+              "commentReports": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "reporterId"
+                  ]
+                },
+                "to": {
+                  "model": "SpotCommentReport",
+                  "namespace": "public"
+                }
+              },
               "comments": {
                 "cardinality": "1:N",
                 "on": {
@@ -704,6 +1081,36 @@
                 },
                 "to": {
                   "model": "SpotComment",
+                  "namespace": "public"
+                }
+              },
+              "communityDescriptionReports": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "reporterId"
+                  ]
+                },
+                "to": {
+                  "model": "SpotCommunityDescriptionReport",
+                  "namespace": "public"
+                }
+              },
+              "communityDescriptions": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "communityDescriptionAuthorId"
+                  ]
+                },
+                "to": {
+                  "model": "SkateSpot",
                   "namespace": "public"
                 }
               },
@@ -889,6 +1296,21 @@
                   "dataType": "pg/text",
                   "nullable": true
                 },
+                "communityDescription": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "communityDescriptionAuthorId": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": true
+                },
+                "communityDescriptionUpdatedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
+                },
                 "createdAt": {
                   "codecId": "pg/timestamptz-string@1",
                   "dataType": "pg/timestamptz",
@@ -967,9 +1389,36 @@
                     "namespaceId": "public",
                     "tableName": "User"
                   }
+                },
+                {
+                  "index": {
+                    "name": "SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8"
+                  },
+                  "source": {
+                    "columns": [
+                      "communityDescriptionAuthorId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "SkateSpot"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "User"
+                  }
                 }
               ],
               "indexes": [
+                {
+                  "columns": [
+                    "communityDescriptionAuthorId"
+                  ],
+                  "name": "SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8",
+                  "prefix": "SkateSpot_communityDescriptionAuthorId_idx",
+                  "unique": false
+                },
                 {
                   "columns": [
                     "createdById"
@@ -1084,6 +1533,272 @@
                   ],
                   "name": "SpotComment_userId_idx_a489d58a",
                   "prefix": "SpotComment_userId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
+            "SpotCommentReport": {
+              "columns": {
+                "commentId": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": false
+                },
+                "contentSnapshot": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "createdAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "details": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "id": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "expression": "autoincrement()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "reason": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "reporterId": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": false
+                },
+                "reviewedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
+                },
+                "status": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "pending"
+                  },
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "SpotCommentReport_commentId_idx_b5a4f615"
+                  },
+                  "source": {
+                    "columns": [
+                      "commentId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "SpotCommentReport"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "SpotComment"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "SpotCommentReport_reporterId_idx_aa245831"
+                  },
+                  "source": {
+                    "columns": [
+                      "reporterId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "SpotCommentReport"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "User"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "commentId"
+                  ],
+                  "name": "SpotCommentReport_commentId_idx_b5a4f615",
+                  "prefix": "SpotCommentReport_commentId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "reporterId"
+                  ],
+                  "name": "SpotCommentReport_reporterId_idx_aa245831",
+                  "prefix": "SpotCommentReport_reporterId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "status"
+                  ],
+                  "name": "SpotCommentReport_status_idx_e98638ab",
+                  "prefix": "SpotCommentReport_status_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
+            "SpotCommunityDescriptionReport": {
+              "columns": {
+                "createdAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "descriptionSnapshot": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "details": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "id": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "expression": "autoincrement()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "reason": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "reporterId": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": false
+                },
+                "reviewedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
+                },
+                "spotId": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": false
+                },
+                "status": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "pending"
+                  },
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "SpotCommunityDescriptionReport_spotId_idx_2a0d61dc"
+                  },
+                  "source": {
+                    "columns": [
+                      "spotId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "SpotCommunityDescriptionReport"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "SkateSpot"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "SpotCommunityDescriptionReport_reporterId_idx_aa245831"
+                  },
+                  "source": {
+                    "columns": [
+                      "reporterId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "SpotCommunityDescriptionReport"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "User"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "reporterId"
+                  ],
+                  "name": "SpotCommunityDescriptionReport_reporterId_idx_aa245831",
+                  "prefix": "SpotCommunityDescriptionReport_reporterId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "spotId"
+                  ],
+                  "name": "SpotCommunityDescriptionReport_spotId_idx_2a0d61dc",
+                  "prefix": "SpotCommunityDescriptionReport_spotId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "status"
+                  ],
+                  "name": "SpotCommunityDescriptionReport_status_idx_e98638ab",
+                  "prefix": "SpotCommunityDescriptionReport_status_idx",
                   "unique": false
                 }
               ],
@@ -1235,6 +1950,11 @@
                   },
                   "nullable": false
                 },
+                "details": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
                 "id": {
                   "codecId": "pg/int4@1",
                   "dataType": "pg/int4",
@@ -1330,6 +2050,14 @@
                   "name": "SpotMediaReport_reporterId_idx_aa245831",
                   "prefix": "SpotMediaReport_reporterId_idx",
                   "unique": false
+                },
+                {
+                  "columns": [
+                    "status"
+                  ],
+                  "name": "SpotMediaReport_status_idx_e98638ab",
+                  "prefix": "SpotMediaReport_status_idx",
+                  "unique": false
                 }
               ],
               "primaryKey": {
@@ -1406,7 +2134,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "6b1d7ffdd0caecfee94fbeb92ccd16db76858f7c992f126d1f467e72699d21a9"
+    "storageHash": "025f8e241f3d24e21506951748d97456a23b0052c47f11b06a011b96045ca4d6"
   },
   "execution": {
     "executionHash": "8491dc960c5841705ef5a564c3419025f6d079006f5e67f64834126df9e8b020",

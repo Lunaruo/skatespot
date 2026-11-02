@@ -1,0 +1,128 @@
+[
+  {
+    "id": "column.public.SpotCommentReport.details",
+    "label": "Add column \"details\" to \"SpotCommentReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "details",
+        "table": "SpotCommentReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"details\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotCommentReport",
+          "details"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"details\"",
+        "sql": "ALTER TABLE \"public\".\"SpotCommentReport\" ADD COLUMN \"details\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"details\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotCommentReport",
+          "details"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SpotCommunityDescriptionReport.details",
+    "label": "Add column \"details\" to \"SpotCommunityDescriptionReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "details",
+        "table": "SpotCommunityDescriptionReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"details\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotCommunityDescriptionReport",
+          "details"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"details\"",
+        "sql": "ALTER TABLE \"public\".\"SpotCommunityDescriptionReport\" ADD COLUMN \"details\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"details\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotCommunityDescriptionReport",
+          "details"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SpotMediaReport.details",
+    "label": "Add column \"details\" to \"SpotMediaReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "details",
+        "table": "SpotMediaReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"details\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMediaReport",
+          "details"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"details\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMediaReport\" ADD COLUMN \"details\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"details\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMediaReport",
+          "details"
+        ]
+      }
+    ]
+  }
+]

@@ -18,7 +18,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'6b1d7ffdd0caecfee94fbeb92ccd16db76858f7c992f126d1f467e72699d21a9'>;
+  StorageHashBase<'025f8e241f3d24e21506951748d97456a23b0052c47f11b06a011b96045ca4d6'>;
 export type ExecutionHash =
   ExecutionHashBase<'8491dc960c5841705ef5a564c3419025f6d079006f5e67f64834126df9e8b020'>;
 export type ProfileHash =
@@ -243,6 +243,10 @@ export type FieldOutputTypes = {
     };
     readonly SkateSpot: {
       readonly address: CodecTypes['pg/text@1']['output'] | null;
+      readonly communityDescription: CodecTypes['pg/text@1']['output'] | null;
+      readonly communityDescriptionAuthorId: CodecTypes['pg/int4@1']['output'] | null;
+      readonly communityDescriptionUpdatedAt:
+        CodecTypes['pg/timestamptz-string@1']['output'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly createdById: CodecTypes['pg/int4@1']['output'];
       readonly description: CodecTypes['pg/text@1']['output'] | null;
@@ -261,6 +265,28 @@ export type FieldOutputTypes = {
       readonly spotId: CodecTypes['pg/int4@1']['output'];
       readonly userId: CodecTypes['pg/int4@1']['output'];
     };
+    readonly SpotCommentReport: {
+      readonly commentId: CodecTypes['pg/int4@1']['output'];
+      readonly contentSnapshot: CodecTypes['pg/text@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly details: CodecTypes['pg/text@1']['output'] | null;
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly reason: CodecTypes['pg/text@1']['output'];
+      readonly reporterId: CodecTypes['pg/int4@1']['output'];
+      readonly reviewedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+      readonly status: CodecTypes['pg/text@1']['output'];
+    };
+    readonly SpotCommunityDescriptionReport: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly descriptionSnapshot: CodecTypes['pg/text@1']['output'];
+      readonly details: CodecTypes['pg/text@1']['output'] | null;
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly reason: CodecTypes['pg/text@1']['output'];
+      readonly reporterId: CodecTypes['pg/int4@1']['output'];
+      readonly reviewedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+      readonly spotId: CodecTypes['pg/int4@1']['output'];
+      readonly status: CodecTypes['pg/text@1']['output'];
+    };
     readonly SpotMedia: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly deletedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
@@ -275,6 +301,7 @@ export type FieldOutputTypes = {
     };
     readonly SpotMediaReport: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly details: CodecTypes['pg/text@1']['output'] | null;
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly mediaId: CodecTypes['pg/int4@1']['output'];
       readonly reason: CodecTypes['pg/text@1']['output'];
@@ -303,6 +330,9 @@ export type FieldInputTypes = {
     };
     readonly SkateSpot: {
       readonly address: CodecTypes['pg/text@1']['input'] | null;
+      readonly communityDescription: CodecTypes['pg/text@1']['input'] | null;
+      readonly communityDescriptionAuthorId: CodecTypes['pg/int4@1']['input'] | null;
+      readonly communityDescriptionUpdatedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly createdById: CodecTypes['pg/int4@1']['input'];
       readonly description: CodecTypes['pg/text@1']['input'] | null;
@@ -321,6 +351,28 @@ export type FieldInputTypes = {
       readonly spotId: CodecTypes['pg/int4@1']['input'];
       readonly userId: CodecTypes['pg/int4@1']['input'];
     };
+    readonly SpotCommentReport: {
+      readonly commentId: CodecTypes['pg/int4@1']['input'];
+      readonly contentSnapshot: CodecTypes['pg/text@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly details: CodecTypes['pg/text@1']['input'] | null;
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly reason: CodecTypes['pg/text@1']['input'];
+      readonly reporterId: CodecTypes['pg/int4@1']['input'];
+      readonly reviewedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
+      readonly status: CodecTypes['pg/text@1']['input'];
+    };
+    readonly SpotCommunityDescriptionReport: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly descriptionSnapshot: CodecTypes['pg/text@1']['input'];
+      readonly details: CodecTypes['pg/text@1']['input'] | null;
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly reason: CodecTypes['pg/text@1']['input'];
+      readonly reporterId: CodecTypes['pg/int4@1']['input'];
+      readonly reviewedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
+      readonly spotId: CodecTypes['pg/int4@1']['input'];
+      readonly status: CodecTypes['pg/text@1']['input'];
+    };
     readonly SpotMedia: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly deletedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
@@ -335,6 +387,7 @@ export type FieldInputTypes = {
     };
     readonly SpotMediaReport: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly details: CodecTypes['pg/text@1']['input'] | null;
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly mediaId: CodecTypes['pg/int4@1']['input'];
       readonly reason: CodecTypes['pg/text@1']['input'];
@@ -363,6 +416,10 @@ export type StorageColumnTypes = {
     };
     readonly SkateSpot: {
       readonly address: CodecTypes['pg/text@1']['output'] | null;
+      readonly communityDescription: CodecTypes['pg/text@1']['output'] | null;
+      readonly communityDescriptionAuthorId: CodecTypes['pg/int4@1']['output'] | null;
+      readonly communityDescriptionUpdatedAt:
+        CodecTypes['pg/timestamptz-string@1']['output'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly createdById: CodecTypes['pg/int4@1']['output'];
       readonly description: CodecTypes['pg/text@1']['output'] | null;
@@ -381,6 +438,28 @@ export type StorageColumnTypes = {
       readonly spotId: CodecTypes['pg/int4@1']['output'];
       readonly userId: CodecTypes['pg/int4@1']['output'];
     };
+    readonly SpotCommentReport: {
+      readonly commentId: CodecTypes['pg/int4@1']['output'];
+      readonly contentSnapshot: CodecTypes['pg/text@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly details: CodecTypes['pg/text@1']['output'] | null;
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly reason: CodecTypes['pg/text@1']['output'];
+      readonly reporterId: CodecTypes['pg/int4@1']['output'];
+      readonly reviewedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+      readonly status: CodecTypes['pg/text@1']['output'];
+    };
+    readonly SpotCommunityDescriptionReport: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly descriptionSnapshot: CodecTypes['pg/text@1']['output'];
+      readonly details: CodecTypes['pg/text@1']['output'] | null;
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly reason: CodecTypes['pg/text@1']['output'];
+      readonly reporterId: CodecTypes['pg/int4@1']['output'];
+      readonly reviewedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+      readonly spotId: CodecTypes['pg/int4@1']['output'];
+      readonly status: CodecTypes['pg/text@1']['output'];
+    };
     readonly SpotMedia: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly deletedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
@@ -395,6 +474,7 @@ export type StorageColumnTypes = {
     };
     readonly SpotMediaReport: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly details: CodecTypes['pg/text@1']['output'] | null;
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly mediaId: CodecTypes['pg/int4@1']['output'];
       readonly reason: CodecTypes['pg/text@1']['output'];
@@ -423,6 +503,9 @@ export type StorageColumnInputTypes = {
     };
     readonly SkateSpot: {
       readonly address: CodecTypes['pg/text@1']['input'] | null;
+      readonly communityDescription: CodecTypes['pg/text@1']['input'] | null;
+      readonly communityDescriptionAuthorId: CodecTypes['pg/int4@1']['input'] | null;
+      readonly communityDescriptionUpdatedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly createdById: CodecTypes['pg/int4@1']['input'];
       readonly description: CodecTypes['pg/text@1']['input'] | null;
@@ -441,6 +524,28 @@ export type StorageColumnInputTypes = {
       readonly spotId: CodecTypes['pg/int4@1']['input'];
       readonly userId: CodecTypes['pg/int4@1']['input'];
     };
+    readonly SpotCommentReport: {
+      readonly commentId: CodecTypes['pg/int4@1']['input'];
+      readonly contentSnapshot: CodecTypes['pg/text@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly details: CodecTypes['pg/text@1']['input'] | null;
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly reason: CodecTypes['pg/text@1']['input'];
+      readonly reporterId: CodecTypes['pg/int4@1']['input'];
+      readonly reviewedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
+      readonly status: CodecTypes['pg/text@1']['input'];
+    };
+    readonly SpotCommunityDescriptionReport: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly descriptionSnapshot: CodecTypes['pg/text@1']['input'];
+      readonly details: CodecTypes['pg/text@1']['input'] | null;
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly reason: CodecTypes['pg/text@1']['input'];
+      readonly reporterId: CodecTypes['pg/int4@1']['input'];
+      readonly reviewedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
+      readonly spotId: CodecTypes['pg/int4@1']['input'];
+      readonly status: CodecTypes['pg/text@1']['input'];
+    };
     readonly SpotMedia: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly deletedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
@@ -455,6 +560,7 @@ export type StorageColumnInputTypes = {
     };
     readonly SpotMediaReport: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly details: CodecTypes['pg/text@1']['input'] | null;
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly mediaId: CodecTypes['pg/int4@1']['input'];
       readonly reason: CodecTypes['pg/text@1']['input'];
@@ -485,6 +591,9 @@ export namespace Models {
   };
   export type public_SkateSpot = {
     address: CodecTypes['pg/text@1']['output'] | null;
+    communityDescription: CodecTypes['pg/text@1']['output'] | null;
+    communityDescriptionAuthorId: CodecTypes['pg/int4@1']['output'] | null;
+    communityDescriptionUpdatedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
     createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
     createdById: CodecTypes['pg/int4@1']['output'];
     description: CodecTypes['pg/text@1']['output'] | null;
@@ -496,9 +605,16 @@ export namespace Models {
     name: CodecTypes['pg/text@1']['output'];
     updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     comments: public_SpotComment[];
+    communityDescriptionAuthor: public_User | null;
+    communityDescriptionReports: public_SpotCommunityDescriptionReport[];
     createdBy: public_User;
     media: public_SpotMedia[];
-    readonly [RelationKeys]?: 'comments' | 'createdBy' | 'media';
+    readonly [RelationKeys]?:
+      | 'comments'
+      | 'communityDescriptionAuthor'
+      | 'communityDescriptionReports'
+      | 'createdBy'
+      | 'media';
   };
   export type public_SpotComment = {
     content: CodecTypes['pg/text@1']['output'];
@@ -506,9 +622,38 @@ export namespace Models {
     id: CodecTypes['pg/int4@1']['output'];
     spotId: CodecTypes['pg/int4@1']['output'];
     userId: CodecTypes['pg/int4@1']['output'];
+    reports: public_SpotCommentReport[];
     spot: public_SkateSpot;
     user: public_User;
-    readonly [RelationKeys]?: 'spot' | 'user';
+    readonly [RelationKeys]?: 'reports' | 'spot' | 'user';
+  };
+  export type public_SpotCommentReport = {
+    commentId: CodecTypes['pg/int4@1']['output'];
+    contentSnapshot: CodecTypes['pg/text@1']['output'];
+    createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    details: CodecTypes['pg/text@1']['output'] | null;
+    id: CodecTypes['pg/int4@1']['output'];
+    reason: CodecTypes['pg/text@1']['output'];
+    reporterId: CodecTypes['pg/int4@1']['output'];
+    reviewedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+    status: CodecTypes['pg/text@1']['output'];
+    comment: public_SpotComment;
+    reporter: public_User;
+    readonly [RelationKeys]?: 'comment' | 'reporter';
+  };
+  export type public_SpotCommunityDescriptionReport = {
+    createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    descriptionSnapshot: CodecTypes['pg/text@1']['output'];
+    details: CodecTypes['pg/text@1']['output'] | null;
+    id: CodecTypes['pg/int4@1']['output'];
+    reason: CodecTypes['pg/text@1']['output'];
+    reporterId: CodecTypes['pg/int4@1']['output'];
+    reviewedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+    spotId: CodecTypes['pg/int4@1']['output'];
+    status: CodecTypes['pg/text@1']['output'];
+    reporter: public_User;
+    spot: public_SkateSpot;
+    readonly [RelationKeys]?: 'reporter' | 'spot';
   };
   export type public_SpotMedia = {
     createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
@@ -528,6 +673,7 @@ export namespace Models {
   };
   export type public_SpotMediaReport = {
     createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    details: CodecTypes['pg/text@1']['output'] | null;
     id: CodecTypes['pg/int4@1']['output'];
     mediaId: CodecTypes['pg/int4@1']['output'];
     reason: CodecTypes['pg/text@1']['output'];
@@ -545,12 +691,23 @@ export namespace Models {
     passwordHash: CodecTypes['pg/text@1']['output'];
     updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     username: CodecTypes['pg/text@1']['output'] | null;
+    commentReports: public_SpotCommentReport[];
     comments: public_SpotComment[];
+    communityDescriptionReports: public_SpotCommunityDescriptionReport[];
+    communityDescriptions: public_SkateSpot[];
     media: public_SpotMedia[];
     refreshTokens: public_RefreshToken[];
     reports: public_SpotMediaReport[];
     spots: public_SkateSpot[];
-    readonly [RelationKeys]?: 'comments' | 'media' | 'refreshTokens' | 'reports' | 'spots';
+    readonly [RelationKeys]?:
+      | 'commentReports'
+      | 'comments'
+      | 'communityDescriptionReports'
+      | 'communityDescriptions'
+      | 'media'
+      | 'refreshTokens'
+      | 'reports'
+      | 'spots';
   };
 }
 
@@ -559,6 +716,8 @@ export declare const models: {
     RefreshToken: Models.public_RefreshToken;
     SkateSpot: Models.public_SkateSpot;
     SpotComment: Models.public_SpotComment;
+    SpotCommentReport: Models.public_SpotCommentReport;
+    SpotCommunityDescriptionReport: Models.public_SpotCommunityDescriptionReport;
     SpotMedia: Models.public_SpotMedia;
     SpotMediaReport: Models.public_SpotMediaReport;
     User: Models.public_User;
@@ -654,6 +813,24 @@ type ContractBase = Omit<
                   readonly nullable: true;
                   readonly many: false;
                 };
+                readonly communityDescription: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly communityDescriptionAuthorId: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly communityDescriptionUpdatedAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
                 readonly createdAt: {
                   readonly dataType: 'pg/timestamptz';
                   readonly codecId: 'pg/timestamptz-string@1';
@@ -724,6 +901,12 @@ type ContractBase = Omit<
               uniques: readonly [{ readonly columns: readonly ['externalSource', 'externalId'] }];
               indexes: readonly [
                 {
+                  readonly name: 'SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8';
+                  readonly prefix: 'SkateSpot_communityDescriptionAuthorId_idx';
+                  readonly columns: readonly ['communityDescriptionAuthorId'];
+                  readonly unique: false;
+                },
+                {
                   readonly name: 'SkateSpot_createdById_idx_8bf640ed';
                   readonly prefix: 'SkateSpot_createdById_idx';
                   readonly columns: readonly ['createdById'];
@@ -736,6 +919,18 @@ type ContractBase = Omit<
                     readonly namespaceId: 'public' & NamespaceId;
                     readonly tableName: 'SkateSpot';
                     readonly columns: readonly ['createdById'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'User';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'SkateSpot';
+                    readonly columns: readonly ['communityDescriptionAuthorId'];
                   };
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
@@ -821,6 +1016,236 @@ type ContractBase = Omit<
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
                     readonly tableName: 'SkateSpot';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
+            readonly SpotCommentReport: {
+              columns: {
+                readonly commentId: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly contentSnapshot: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly createdAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                  readonly many: false;
+                };
+                readonly details: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                  readonly many: false;
+                };
+                readonly reason: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly reporterId: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly reviewedAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly status: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'pending'>;
+                  };
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [
+                {
+                  readonly name: 'SpotCommentReport_commentId_idx_b5a4f615';
+                  readonly prefix: 'SpotCommentReport_commentId_idx';
+                  readonly columns: readonly ['commentId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'SpotCommentReport_reporterId_idx_aa245831';
+                  readonly prefix: 'SpotCommentReport_reporterId_idx';
+                  readonly columns: readonly ['reporterId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'SpotCommentReport_status_idx_e98638ab';
+                  readonly prefix: 'SpotCommentReport_status_idx';
+                  readonly columns: readonly ['status'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'SpotCommentReport';
+                    readonly columns: readonly ['commentId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'SpotComment';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'SpotCommentReport';
+                    readonly columns: readonly ['reporterId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'User';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
+            readonly SpotCommunityDescriptionReport: {
+              columns: {
+                readonly createdAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                  readonly many: false;
+                };
+                readonly descriptionSnapshot: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly details: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                  readonly many: false;
+                };
+                readonly reason: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly reporterId: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly reviewedAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly spotId: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly status: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'pending'>;
+                  };
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [
+                {
+                  readonly name: 'SpotCommunityDescriptionReport_reporterId_idx_aa245831';
+                  readonly prefix: 'SpotCommunityDescriptionReport_reporterId_idx';
+                  readonly columns: readonly ['reporterId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'SpotCommunityDescriptionReport_spotId_idx_2a0d61dc';
+                  readonly prefix: 'SpotCommunityDescriptionReport_spotId_idx';
+                  readonly columns: readonly ['spotId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'SpotCommunityDescriptionReport_status_idx_e98638ab';
+                  readonly prefix: 'SpotCommunityDescriptionReport_status_idx';
+                  readonly columns: readonly ['status'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'SpotCommunityDescriptionReport';
+                    readonly columns: readonly ['spotId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'SkateSpot';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'SpotCommunityDescriptionReport';
+                    readonly columns: readonly ['reporterId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'User';
                     readonly columns: readonly ['id'];
                   };
                 },
@@ -950,6 +1375,12 @@ type ContractBase = Omit<
                   readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
                   readonly many: false;
                 };
+                readonly details: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
                 readonly id: {
                   readonly dataType: 'pg/int4';
                   readonly codecId: 'pg/int4@1';
@@ -1008,6 +1439,12 @@ type ContractBase = Omit<
                   readonly name: 'SpotMediaReport_reporterId_idx_aa245831';
                   readonly prefix: 'SpotMediaReport_reporterId_idx';
                   readonly columns: readonly ['reporterId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'SpotMediaReport_status_idx_e98638ab';
+                  readonly prefix: 'SpotMediaReport_status_idx';
+                  readonly columns: readonly ['status'];
                   readonly unique: false;
                 },
               ];
@@ -1110,6 +1547,14 @@ type ContractBase = Omit<
       readonly namespace: 'public' & NamespaceId;
       readonly model: 'SpotComment';
     };
+    readonly SpotCommentReport: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'SpotCommentReport';
+    };
+    readonly SpotCommunityDescriptionReport: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'SpotCommunityDescriptionReport';
+    };
     readonly SpotMedia: { readonly namespace: 'public' & NamespaceId; readonly model: 'SpotMedia' };
     readonly SpotMediaReport: {
       readonly namespace: 'public' & NamespaceId;
@@ -1179,6 +1624,21 @@ type ContractBase = Omit<
                 readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
+              readonly communityDescription: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly communityDescriptionAuthorId: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly communityDescriptionUpdatedAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
               readonly createdAt: {
                 readonly nullable: false;
                 readonly type: {
@@ -1238,6 +1698,26 @@ type ContractBase = Omit<
                   readonly targetFields: readonly ['spotId'];
                 };
               };
+              readonly communityDescriptionAuthor: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['communityDescriptionAuthorId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+              readonly communityDescriptionReports: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'SpotCommunityDescriptionReport';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['spotId'];
+                };
+              };
               readonly createdBy: {
                 readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
                 readonly cardinality: 'N:1';
@@ -1264,6 +1744,13 @@ type ContractBase = Omit<
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly address: { readonly column: 'address' };
+                readonly communityDescription: { readonly column: 'communityDescription' };
+                readonly communityDescriptionAuthorId: {
+                  readonly column: 'communityDescriptionAuthorId';
+                };
+                readonly communityDescriptionUpdatedAt: {
+                  readonly column: 'communityDescriptionUpdatedAt';
+                };
                 readonly createdAt: { readonly column: 'createdAt' };
                 readonly createdById: { readonly column: 'createdById' };
                 readonly description: { readonly column: 'description' };
@@ -1304,6 +1791,17 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
+              readonly reports: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'SpotCommentReport';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['commentId'];
+                };
+              };
               readonly spot: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
@@ -1335,6 +1833,174 @@ type ContractBase = Omit<
                 readonly id: { readonly column: 'id' };
                 readonly spotId: { readonly column: 'spotId' };
                 readonly userId: { readonly column: 'userId' };
+              };
+            };
+          };
+          readonly SpotCommentReport: {
+            readonly fields: {
+              readonly commentId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly contentSnapshot: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly details: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly reason: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly reporterId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly reviewedAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly status: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+            };
+            readonly relations: {
+              readonly comment: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'SpotComment';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['commentId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+              readonly reporter: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['reporterId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'SpotCommentReport';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly commentId: { readonly column: 'commentId' };
+                readonly contentSnapshot: { readonly column: 'contentSnapshot' };
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly details: { readonly column: 'details' };
+                readonly id: { readonly column: 'id' };
+                readonly reason: { readonly column: 'reason' };
+                readonly reporterId: { readonly column: 'reporterId' };
+                readonly reviewedAt: { readonly column: 'reviewedAt' };
+                readonly status: { readonly column: 'status' };
+              };
+            };
+          };
+          readonly SpotCommunityDescriptionReport: {
+            readonly fields: {
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly descriptionSnapshot: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly details: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly reason: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly reporterId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly reviewedAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly spotId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly status: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+            };
+            readonly relations: {
+              readonly reporter: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['reporterId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+              readonly spot: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'SkateSpot';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['spotId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'SpotCommunityDescriptionReport';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly descriptionSnapshot: { readonly column: 'descriptionSnapshot' };
+                readonly details: { readonly column: 'details' };
+                readonly id: { readonly column: 'id' };
+                readonly reason: { readonly column: 'reason' };
+                readonly reporterId: { readonly column: 'reporterId' };
+                readonly reviewedAt: { readonly column: 'reviewedAt' };
+                readonly spotId: { readonly column: 'spotId' };
+                readonly status: { readonly column: 'status' };
               };
             };
           };
@@ -1447,6 +2113,10 @@ type ContractBase = Omit<
                   readonly codecId: 'pg/timestamptz-string@1';
                 };
               };
+              readonly details: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
               readonly id: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
@@ -1503,6 +2173,7 @@ type ContractBase = Omit<
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly createdAt: { readonly column: 'createdAt' };
+                readonly details: { readonly column: 'details' };
                 readonly id: { readonly column: 'id' };
                 readonly mediaId: { readonly column: 'mediaId' };
                 readonly reason: { readonly column: 'reason' };
@@ -1546,6 +2217,17 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
+              readonly commentReports: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'SpotCommentReport';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['reporterId'];
+                };
+              };
               readonly comments: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
@@ -1555,6 +2237,28 @@ type ContractBase = Omit<
                 readonly on: {
                   readonly localFields: readonly ['id'];
                   readonly targetFields: readonly ['userId'];
+                };
+              };
+              readonly communityDescriptionReports: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'SpotCommunityDescriptionReport';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['reporterId'];
+                };
+              };
+              readonly communityDescriptions: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'SkateSpot';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['communityDescriptionAuthorId'];
                 };
               };
               readonly media: {

@@ -886,11 +886,12 @@ function registerMediaRoutes(
     }
   );
 
+
   // ============================================================
   // 4. SIGNALER UNE PHOTO
   //
   // POST /api/media/:id/reports
-  // Corps JSON : { "reason": "..." }
+  // Corps JSON : { "reason": "...", "details": "..." }
   // ============================================================
 
   app.post(
@@ -902,6 +903,11 @@ function registerMediaRoutes(
       const reason =
         typeof req.body?.reason === 'string'
           ? req.body.reason.trim()
+          : '';
+
+      const details =
+        typeof req.body?.details === 'string'
+          ? req.body.details.trim()
           : '';
 
       if (
@@ -917,6 +923,23 @@ function registerMediaRoutes(
         return res.status(400).json({
           message:
             'Le motif doit contenir entre 3 et 500 caractères.',
+        });
+      }
+
+      if (
+        req.body?.details !== undefined &&
+        req.body?.details !== null &&
+        typeof req.body.details !== 'string'
+      ) {
+        return res.status(400).json({
+          message: 'La précision du signalement est invalide.',
+        });
+      }
+
+      if (details.length > 500) {
+        return res.status(400).json({
+          message:
+            'La précision ne doit pas dépasser 500 caractères.',
         });
       }
 
@@ -936,6 +959,31 @@ function registerMediaRoutes(
             message: 'Photo introuvable.',
           });
         }
+        // Interdire le signalement de sa propre photo.
+        if (media.userId === req.authUserId) {
+          return res.status(403).json({
+            message:
+              'Vous ne pouvez pas signaler votre propre photo.',
+          });
+        }
+
+        // Empêcher plusieurs signalements en attente
+        // du même utilisateur sur la même photo.
+        const pendingReport =
+          await db.orm.public.SpotMediaReport
+            .where({
+              mediaId,
+              reporterId: req.authUserId,
+              status: 'pending',
+            })
+            .first();
+
+        if (pendingReport) {
+          return res.status(409).json({
+            message:
+              'Vous avez déjà signalé cette photo.',
+          });
+        }
 
         // Le signalement ne masque pas automatiquement
         // la photo : une décision de modération est nécessaire.
@@ -944,6 +992,7 @@ function registerMediaRoutes(
             mediaId,
             reporterId: req.authUserId,
             reason,
+            details: details || null,
             status: 'pending',
             reviewedAt: null,
           });
