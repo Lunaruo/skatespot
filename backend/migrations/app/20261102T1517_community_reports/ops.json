@@ -1,0 +1,521 @@
+[
+  {
+    "id": "table.SpotCommentReport",
+    "label": "Create table \"SpotCommentReport\"",
+    "summary": "Creates table \"SpotCommentReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "SpotCommentReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"SpotCommentReport\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommentReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"SpotCommentReport\"",
+        "sql": "CREATE TABLE \"public\".\"SpotCommentReport\" (\n  \"commentId\" int4 NOT NULL,\n  \"contentSnapshot\" text NOT NULL,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"reason\" text NOT NULL,\n  \"reporterId\" int4 NOT NULL,\n  \"reviewedAt\" timestamptz,\n  \"status\" text DEFAULT 'pending' NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"SpotCommentReport\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommentReport\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.SpotCommunityDescriptionReport",
+    "label": "Create table \"SpotCommunityDescriptionReport\"",
+    "summary": "Creates table \"SpotCommunityDescriptionReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "SpotCommunityDescriptionReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"SpotCommunityDescriptionReport\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommunityDescriptionReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"SpotCommunityDescriptionReport\"",
+        "sql": "CREATE TABLE \"public\".\"SpotCommunityDescriptionReport\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"descriptionSnapshot\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"reason\" text NOT NULL,\n  \"reporterId\" int4 NOT NULL,\n  \"reviewedAt\" timestamptz,\n  \"spotId\" int4 NOT NULL,\n  \"status\" text DEFAULT 'pending' NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"SpotCommunityDescriptionReport\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommunityDescriptionReport\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotCommentReport.SpotCommentReport_commentId_idx_b5a4f615",
+    "label": "Create index \"SpotCommentReport_commentId_idx_b5a4f615\" on \"SpotCommentReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotCommentReport_commentId_idx_b5a4f615",
+        "table": "SpotCommentReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotCommentReport_commentId_idx_b5a4f615\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommentReport_commentId_idx_b5a4f615\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotCommentReport_commentId_idx_b5a4f615\"",
+        "sql": "CREATE INDEX \"SpotCommentReport_commentId_idx_b5a4f615\" ON \"public\".\"SpotCommentReport\" (\"commentId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotCommentReport_commentId_idx_b5a4f615\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommentReport_commentId_idx_b5a4f615\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotCommentReport.SpotCommentReport_reporterId_idx_aa245831",
+    "label": "Create index \"SpotCommentReport_reporterId_idx_aa245831\" on \"SpotCommentReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotCommentReport_reporterId_idx_aa245831",
+        "table": "SpotCommentReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotCommentReport_reporterId_idx_aa245831\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommentReport_reporterId_idx_aa245831\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotCommentReport_reporterId_idx_aa245831\"",
+        "sql": "CREATE INDEX \"SpotCommentReport_reporterId_idx_aa245831\" ON \"public\".\"SpotCommentReport\" (\"reporterId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotCommentReport_reporterId_idx_aa245831\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommentReport_reporterId_idx_aa245831\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotCommentReport.SpotCommentReport_status_idx_e98638ab",
+    "label": "Create index \"SpotCommentReport_status_idx_e98638ab\" on \"SpotCommentReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotCommentReport_status_idx_e98638ab",
+        "table": "SpotCommentReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotCommentReport_status_idx_e98638ab\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommentReport_status_idx_e98638ab\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotCommentReport_status_idx_e98638ab\"",
+        "sql": "CREATE INDEX \"SpotCommentReport_status_idx_e98638ab\" ON \"public\".\"SpotCommentReport\" (\"status\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotCommentReport_status_idx_e98638ab\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommentReport_status_idx_e98638ab\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotCommunityDescriptionReport.SpotCommunityDescriptionReport_reporterId_idx_aa245831",
+    "label": "Create index \"SpotCommunityDescriptionReport_reporterId_idx_aa245831\" on \"SpotCommunityDescriptionReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotCommunityDescriptionReport_reporterId_idx_aa245831",
+        "table": "SpotCommunityDescriptionReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotCommunityDescriptionReport_reporterId_idx_aa245831\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommunityDescriptionReport_reporterId_idx_aa245831\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotCommunityDescriptionReport_reporterId_idx_aa245831\"",
+        "sql": "CREATE INDEX \"SpotCommunityDescriptionReport_reporterId_idx_aa245831\" ON \"public\".\"SpotCommunityDescriptionReport\" (\"reporterId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotCommunityDescriptionReport_reporterId_idx_aa245831\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommunityDescriptionReport_reporterId_idx_aa245831\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotCommunityDescriptionReport.SpotCommunityDescriptionReport_spotId_idx_2a0d61dc",
+    "label": "Create index \"SpotCommunityDescriptionReport_spotId_idx_2a0d61dc\" on \"SpotCommunityDescriptionReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotCommunityDescriptionReport_spotId_idx_2a0d61dc",
+        "table": "SpotCommunityDescriptionReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotCommunityDescriptionReport_spotId_idx_2a0d61dc\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommunityDescriptionReport_spotId_idx_2a0d61dc\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotCommunityDescriptionReport_spotId_idx_2a0d61dc\"",
+        "sql": "CREATE INDEX \"SpotCommunityDescriptionReport_spotId_idx_2a0d61dc\" ON \"public\".\"SpotCommunityDescriptionReport\" (\"spotId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotCommunityDescriptionReport_spotId_idx_2a0d61dc\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommunityDescriptionReport_spotId_idx_2a0d61dc\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotCommunityDescriptionReport.SpotCommunityDescriptionReport_status_idx_e98638ab",
+    "label": "Create index \"SpotCommunityDescriptionReport_status_idx_e98638ab\" on \"SpotCommunityDescriptionReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotCommunityDescriptionReport_status_idx_e98638ab",
+        "table": "SpotCommunityDescriptionReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotCommunityDescriptionReport_status_idx_e98638ab\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommunityDescriptionReport_status_idx_e98638ab\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotCommunityDescriptionReport_status_idx_e98638ab\"",
+        "sql": "CREATE INDEX \"SpotCommunityDescriptionReport_status_idx_e98638ab\" ON \"public\".\"SpotCommunityDescriptionReport\" (\"status\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotCommunityDescriptionReport_status_idx_e98638ab\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotCommunityDescriptionReport_status_idx_e98638ab\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotMediaReport.SpotMediaReport_status_idx_e98638ab",
+    "label": "Create index \"SpotMediaReport_status_idx_e98638ab\" on \"SpotMediaReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotMediaReport_status_idx_e98638ab",
+        "table": "SpotMediaReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotMediaReport_status_idx_e98638ab\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMediaReport_status_idx_e98638ab\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotMediaReport_status_idx_e98638ab\"",
+        "sql": "CREATE INDEX \"SpotMediaReport_status_idx_e98638ab\" ON \"public\".\"SpotMediaReport\" (\"status\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotMediaReport_status_idx_e98638ab\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMediaReport_status_idx_e98638ab\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotCommentReport.SpotCommentReport_commentId_fkey",
+    "label": "Add foreign key \"SpotCommentReport_commentId_fkey\" on \"SpotCommentReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotCommentReport_commentId_fkey",
+        "table": "SpotCommentReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotCommentReport_commentId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotCommentReport_commentId_fkey",
+          "public",
+          "\"public\".\"SpotCommentReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotCommentReport_commentId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotCommentReport\"\nADD CONSTRAINT \"SpotCommentReport_commentId_fkey\"\nFOREIGN KEY (\"commentId\")\nREFERENCES \"public\".\"SpotComment\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotCommentReport_commentId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotCommentReport_commentId_fkey",
+          "public",
+          "\"public\".\"SpotCommentReport\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotCommentReport.SpotCommentReport_reporterId_fkey",
+    "label": "Add foreign key \"SpotCommentReport_reporterId_fkey\" on \"SpotCommentReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotCommentReport_reporterId_fkey",
+        "table": "SpotCommentReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotCommentReport_reporterId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotCommentReport_reporterId_fkey",
+          "public",
+          "\"public\".\"SpotCommentReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotCommentReport_reporterId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotCommentReport\"\nADD CONSTRAINT \"SpotCommentReport_reporterId_fkey\"\nFOREIGN KEY (\"reporterId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotCommentReport_reporterId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotCommentReport_reporterId_fkey",
+          "public",
+          "\"public\".\"SpotCommentReport\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotCommunityDescriptionReport.SpotCommunityDescriptionReport_spotId_fkey",
+    "label": "Add foreign key \"SpotCommunityDescriptionReport_spotId_fkey\" on \"SpotCommunityDescriptionReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotCommunityDescriptionReport_spotId_fkey",
+        "table": "SpotCommunityDescriptionReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotCommunityDescriptionReport_spotId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotCommunityDescriptionReport_spotId_fkey",
+          "public",
+          "\"public\".\"SpotCommunityDescriptionReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotCommunityDescriptionReport_spotId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotCommunityDescriptionReport\"\nADD CONSTRAINT \"SpotCommunityDescriptionReport_spotId_fkey\"\nFOREIGN KEY (\"spotId\")\nREFERENCES \"public\".\"SkateSpot\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotCommunityDescriptionReport_spotId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotCommunityDescriptionReport_spotId_fkey",
+          "public",
+          "\"public\".\"SpotCommunityDescriptionReport\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotCommunityDescriptionReport.SpotCommunityDescriptionReport_reporterId_fkey",
+    "label": "Add foreign key \"SpotCommunityDescriptionReport_reporterId_fkey\" on \"SpotCommunityDescriptionReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotCommunityDescriptionReport_reporterId_fkey",
+        "table": "SpotCommunityDescriptionReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotCommunityDescriptionReport_reporterId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotCommunityDescriptionReport_reporterId_fkey",
+          "public",
+          "\"public\".\"SpotCommunityDescriptionReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotCommunityDescriptionReport_reporterId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotCommunityDescriptionReport\"\nADD CONSTRAINT \"SpotCommunityDescriptionReport_reporterId_fkey\"\nFOREIGN KEY (\"reporterId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotCommunityDescriptionReport_reporterId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotCommunityDescriptionReport_reporterId_fkey",
+          "public",
+          "\"public\".\"SpotCommunityDescriptionReport\""
+        ]
+      }
+    ]
+  }
+]

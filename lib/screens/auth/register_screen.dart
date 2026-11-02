@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../services/auth_service.dart';
@@ -6,10 +5,7 @@ import '../../services/auth_service.dart';
 class RegisterScreen extends StatefulWidget {
   final VoidCallback onRegisterSuccess;
 
-  const RegisterScreen({
-    super.key,
-    required this.onRegisterSuccess,
-  });
+  const RegisterScreen({super.key, required this.onRegisterSuccess});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -56,9 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (!mounted) return;
 
       setState(() {
-        _errorMessage = error
-            .toString()
-            .replaceFirst('Exception: ', '');
+        _errorMessage = error.toString().replaceFirst('Exception: ', '');
       });
     } finally {
       if (mounted) {

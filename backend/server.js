@@ -1,4 +1,4 @@
-
+﻿
 require('dotenv').config();
 
 const express = require('express');
@@ -518,6 +518,26 @@ app.post('/api/spots', authenticateToken, async (req, res) => {
 
 const { registerMediaRoutes } = require('./media_routes');
 registerMediaRoutes(app, { getDb, authenticateToken });
+
+const { registerCommentRoutes } = require('./comment_routes');
+registerCommentRoutes(app, { getDb, authenticateToken });
+
+const { registerCommunityDescriptionRoutes } =
+  require('./community_description_routes');
+
+registerCommunityDescriptionRoutes(app, {
+  getDb,
+  authenticateToken,
+});
+
+const { registerContentReportRoutes } =
+  require('./content_report_routes');
+
+registerContentReportRoutes(app, {
+  getDb,
+  authenticateToken,
+});
+
 app.listen(PORT, () => {
   console.log(`Serveur SkateSpot dÃ©marrÃ© sur le port ${PORT}`);
 });

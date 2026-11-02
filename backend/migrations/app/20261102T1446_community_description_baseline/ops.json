@@ -1,0 +1,704 @@
+[
+  {
+    "id": "table.SpotMediaReport",
+    "label": "Create table \"SpotMediaReport\"",
+    "summary": "Creates table \"SpotMediaReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "SpotMediaReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"SpotMediaReport\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMediaReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"SpotMediaReport\"",
+        "sql": "CREATE TABLE \"public\".\"SpotMediaReport\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"mediaId\" int4 NOT NULL,\n  \"reason\" text NOT NULL,\n  \"reporterId\" int4 NOT NULL,\n  \"reviewedAt\" timestamptz,\n  \"status\" text DEFAULT 'pending' NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"SpotMediaReport\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMediaReport\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SkateSpot.communityDescription",
+    "label": "Add column \"communityDescription\" to \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "communityDescription",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"communityDescription\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "communityDescription"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"communityDescription\"",
+        "sql": "ALTER TABLE \"public\".\"SkateSpot\" ADD COLUMN \"communityDescription\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"communityDescription\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "communityDescription"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SkateSpot.communityDescriptionAuthorId",
+    "label": "Add column \"communityDescriptionAuthorId\" to \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "communityDescriptionAuthorId",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"communityDescriptionAuthorId\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "communityDescriptionAuthorId"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"communityDescriptionAuthorId\"",
+        "sql": "ALTER TABLE \"public\".\"SkateSpot\" ADD COLUMN \"communityDescriptionAuthorId\" int4"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"communityDescriptionAuthorId\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "communityDescriptionAuthorId"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SkateSpot.communityDescriptionUpdatedAt",
+    "label": "Add column \"communityDescriptionUpdatedAt\" to \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "communityDescriptionUpdatedAt",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"communityDescriptionUpdatedAt\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "communityDescriptionUpdatedAt"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"communityDescriptionUpdatedAt\"",
+        "sql": "ALTER TABLE \"public\".\"SkateSpot\" ADD COLUMN \"communityDescriptionUpdatedAt\" timestamptz"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"communityDescriptionUpdatedAt\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "communityDescriptionUpdatedAt"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SkateSpot.externalId",
+    "label": "Add column \"externalId\" to \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "externalId",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"externalId\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "externalId"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"externalId\"",
+        "sql": "ALTER TABLE \"public\".\"SkateSpot\" ADD COLUMN \"externalId\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"externalId\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "externalId"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SkateSpot.externalSource",
+    "label": "Add column \"externalSource\" to \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "externalSource",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"externalSource\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "externalSource"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"externalSource\"",
+        "sql": "ALTER TABLE \"public\".\"SkateSpot\" ADD COLUMN \"externalSource\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"externalSource\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SkateSpot",
+          "externalSource"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SpotMedia.deletedAt",
+    "label": "Add column \"deletedAt\" to \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "deletedAt",
+        "table": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"deletedAt\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMedia",
+          "deletedAt"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"deletedAt\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMedia\" ADD COLUMN \"deletedAt\" timestamptz"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"deletedAt\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMedia",
+          "deletedAt"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SpotMedia.moderationReason",
+    "label": "Add column \"moderationReason\" to \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "moderationReason",
+        "table": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"moderationReason\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMedia",
+          "moderationReason"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"moderationReason\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMedia\" ADD COLUMN \"moderationReason\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"moderationReason\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMedia",
+          "moderationReason"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SpotMedia.moderationStatus",
+    "label": "Add column \"moderationStatus\" to \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "moderationStatus",
+        "table": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"moderationStatus\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMedia",
+          "moderationStatus"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"moderationStatus\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMedia\" ADD COLUMN \"moderationStatus\" text DEFAULT 'approved' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"moderationStatus\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMedia",
+          "moderationStatus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.SpotMedia.storageKey",
+    "label": "Add column \"storageKey\" to \"SpotMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "storageKey",
+        "table": "SpotMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"storageKey\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMedia",
+          "storageKey"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"storageKey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMedia\" ADD COLUMN \"storageKey\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"storageKey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "SpotMedia",
+          "storageKey"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.SkateSpot.SkateSpot_externalSource_externalId_key",
+    "label": "Add unique constraint on \"SkateSpot\" (externalSource, externalId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "SkateSpot_externalSource_externalId_key",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"SkateSpot_externalSource_externalId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SkateSpot_externalSource_externalId_key",
+          "public",
+          "\"public\".\"SkateSpot\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"SkateSpot_externalSource_externalId_key\"",
+        "sql": "ALTER TABLE \"public\".\"SkateSpot\" ADD CONSTRAINT \"SkateSpot_externalSource_externalId_key\" UNIQUE (\"externalSource\", \"externalId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"SkateSpot_externalSource_externalId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SkateSpot_externalSource_externalId_key",
+          "public",
+          "\"public\".\"SkateSpot\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SkateSpot.SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8",
+    "label": "Create index \"SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8\" on \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8\"",
+        "sql": "CREATE INDEX \"SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8\" ON \"public\".\"SkateSpot\" (\"communityDescriptionAuthorId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SkateSpot_communityDescriptionAuthorId_idx_6f61b6f8\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotMediaReport.SpotMediaReport_mediaId_idx_6b06655c",
+    "label": "Create index \"SpotMediaReport_mediaId_idx_6b06655c\" on \"SpotMediaReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotMediaReport_mediaId_idx_6b06655c",
+        "table": "SpotMediaReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotMediaReport_mediaId_idx_6b06655c\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMediaReport_mediaId_idx_6b06655c\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotMediaReport_mediaId_idx_6b06655c\"",
+        "sql": "CREATE INDEX \"SpotMediaReport_mediaId_idx_6b06655c\" ON \"public\".\"SpotMediaReport\" (\"mediaId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotMediaReport_mediaId_idx_6b06655c\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMediaReport_mediaId_idx_6b06655c\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.SpotMediaReport.SpotMediaReport_reporterId_idx_aa245831",
+    "label": "Create index \"SpotMediaReport_reporterId_idx_aa245831\" on \"SpotMediaReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "SpotMediaReport_reporterId_idx_aa245831",
+        "table": "SpotMediaReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SpotMediaReport_reporterId_idx_aa245831\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMediaReport_reporterId_idx_aa245831\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SpotMediaReport_reporterId_idx_aa245831\"",
+        "sql": "CREATE INDEX \"SpotMediaReport_reporterId_idx_aa245831\" ON \"public\".\"SpotMediaReport\" (\"reporterId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SpotMediaReport_reporterId_idx_aa245831\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"SpotMediaReport_reporterId_idx_aa245831\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SkateSpot.SkateSpot_communityDescriptionAuthorId_fkey",
+    "label": "Add foreign key \"SkateSpot_communityDescriptionAuthorId_fkey\" on \"SkateSpot\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SkateSpot_communityDescriptionAuthorId_fkey",
+        "table": "SkateSpot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SkateSpot_communityDescriptionAuthorId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SkateSpot_communityDescriptionAuthorId_fkey",
+          "public",
+          "\"public\".\"SkateSpot\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SkateSpot_communityDescriptionAuthorId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SkateSpot\"\nADD CONSTRAINT \"SkateSpot_communityDescriptionAuthorId_fkey\"\nFOREIGN KEY (\"communityDescriptionAuthorId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SkateSpot_communityDescriptionAuthorId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SkateSpot_communityDescriptionAuthorId_fkey",
+          "public",
+          "\"public\".\"SkateSpot\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotMediaReport.SpotMediaReport_mediaId_fkey",
+    "label": "Add foreign key \"SpotMediaReport_mediaId_fkey\" on \"SpotMediaReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotMediaReport_mediaId_fkey",
+        "table": "SpotMediaReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotMediaReport_mediaId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotMediaReport_mediaId_fkey",
+          "public",
+          "\"public\".\"SpotMediaReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotMediaReport_mediaId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMediaReport\"\nADD CONSTRAINT \"SpotMediaReport_mediaId_fkey\"\nFOREIGN KEY (\"mediaId\")\nREFERENCES \"public\".\"SpotMedia\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotMediaReport_mediaId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotMediaReport_mediaId_fkey",
+          "public",
+          "\"public\".\"SpotMediaReport\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.SpotMediaReport.SpotMediaReport_reporterId_fkey",
+    "label": "Add foreign key \"SpotMediaReport_reporterId_fkey\" on \"SpotMediaReport\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "SpotMediaReport_reporterId_fkey",
+        "table": "SpotMediaReport"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"SpotMediaReport_reporterId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotMediaReport_reporterId_fkey",
+          "public",
+          "\"public\".\"SpotMediaReport\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"SpotMediaReport_reporterId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"SpotMediaReport\"\nADD CONSTRAINT \"SpotMediaReport_reporterId_fkey\"\nFOREIGN KEY (\"reporterId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"SpotMediaReport_reporterId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "SpotMediaReport_reporterId_fkey",
+          "public",
+          "\"public\".\"SpotMediaReport\""
+        ]
+      }
+    ]
+  }
+]
