@@ -204,13 +204,13 @@ function registerCommentRoutes(app, { getDb, authenticateToken }) {
 
       if (!content) {
         return res.status(400).json({
-          message: 'Le commentaire ne peut pas Ãªtre vide.',
+          message: 'Le commentaire ne peut pas être vide.',
         });
       }
 
       if (content.length > 1000) {
         return res.status(400).json({
-          message: 'Le commentaire ne peut pas dÃ©passer 1000 caractÃ¨res.',
+          message: 'Le commentaire ne peut pas dépasser 1000 caractères.',
         });
       }
 
